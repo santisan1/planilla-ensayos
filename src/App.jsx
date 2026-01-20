@@ -732,13 +732,14 @@ const App = () => {
       if (!u) setLoading(false);
     });
   }, []);
+  const DATA_UID = "empresa-demo-001";
 
   // 2. Suscribirse a Datos (Firestore)
   useEffect(() => {
     if (!user) return;
     setLoading(true);
     const SHARED_UID = "empresa-demo-001";
-    const DATA_UID = "empresa-demo-001";
+
 
     const q = query(
       collection(db, 'artifacts', appId, 'users', DATA_UID, 'projects')
