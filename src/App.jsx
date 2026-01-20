@@ -10,20 +10,17 @@ import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged }
 import { getFirestore, doc, setDoc, deleteDoc, collection, onSnapshot, query } from "firebase/firestore";
 
 // --- FIREBASE SETUP ---
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-};
+const firebaseConfig = { apiKey: "AIzaSyAWQ46JCuYTKZz0IKyp_cwkIla9vii1Fpc", authDomain: "planificacion-posventa.firebaseapp.com", projectId: "planificacion-posventa", storageBucket: "planificacion-posventa.firebasestorage.app", messagingSenderId: "14075191030", appId: "1:14075191030:web:b0078557127f977e0dd6d7" };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
+console.log("FIREBASE ENV CHECK", {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+});
 // --- UTILIDADES ---
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
