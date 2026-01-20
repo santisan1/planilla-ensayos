@@ -10,7 +10,14 @@ import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged }
 import { getFirestore, doc, setDoc, deleteDoc, collection, onSnapshot, query } from "firebase/firestore";
 
 // --- FIREBASE SETUP ---
-const firebaseConfig = { apiKey: "AIzaSyAWQ46JCuYTKZz0IKyp_cwkIla9vii1Fpc", authDomain: "planificacion-posventa.firebaseapp.com", projectId: "planificacion-posventa", storageBucket: "planificacion-posventa.firebasestorage.app", messagingSenderId: "14075191030", appId: "1:14075191030:web:b0078557127f977e0dd6d7" };
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+};
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -731,8 +738,14 @@ const App = () => {
     if (!user) return;
     setLoading(true);
     const SHARED_UID = "empresa-demo-001";
+    const DATA_UID = "empresa-demo-001";
+
     const q = query(
-      collection(db, 'artifacts', appId, 'users', SHARED_UID, 'projects'));
+      collection(db, 'artifacts', appId, 'users', DATA_UID, 'projects')
+    );
+
+
+
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const projectsData = snapshot.docs.map(doc => doc.data());
       // Ordenar localmente por fecha de modificación
@@ -758,7 +771,13 @@ const App = () => {
       insulationData: Array(6).fill(null).map(() => ({ id: generateId() }))
     };
     try {
-      await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'projects', newId), newProject);
+      await setDoc(
+        doc(db, 'artifacts', appId, 'users', DATA_UID, 'projects', project.id),
+        project
+      );
+
+
+
       setActiveProjectId(newId);
     } catch (e) { console.error("Error creating:", e); }
   };
@@ -773,7 +792,10 @@ const App = () => {
   const handleDeleteProject = async (id) => {
     if (!user) return;
     try {
-      await deleteDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'projects', id));
+      await deleteDoc(
+        doc(db, 'artifacts', appId, 'users', DATA_UID, 'projects', id)
+      );
+
       if (activeProjectId === id) setActiveProjectId(null);
     } catch (e) { console.error("Error deleting:", e); }
   };
