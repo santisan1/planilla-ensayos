@@ -732,7 +732,7 @@ const App = () => {
   useEffect(() => {
     if (!user) return;
     setLoading(true);
-    const q = query(collection(db, 'artifacts', appId, 'users', user.uid, 'projects'));
+    const q = query(collection(db, 'projects'));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const projectsData = snapshot.docs.map(doc => doc.data());
       // Ordenar localmente por fecha de modificación
