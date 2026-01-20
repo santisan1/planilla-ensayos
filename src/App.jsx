@@ -773,8 +773,8 @@ const App = () => {
     };
     try {
       await setDoc(
-        doc(db, 'artifacts', appId, 'users', DATA_UID, 'projects', project.id),
-        project
+        doc(db, 'artifacts', appId, 'users', DATA_UID, 'projects', newId),
+        newProject
       );
 
 
@@ -786,7 +786,11 @@ const App = () => {
   const handleUpdateProject = async (project) => {
     if (!user) return;
     try {
-      await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'projects', project.id), project);
+      await setDoc(
+        doc(db, 'artifacts', appId, 'users', DATA_UID, 'projects', project.id),
+        project
+      );
+
     } catch (e) { console.error("Error updating:", e); }
   };
 
